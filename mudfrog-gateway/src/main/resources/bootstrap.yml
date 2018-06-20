@@ -1,0 +1,33 @@
+server:
+  port: 2025
+
+spring:
+  application:
+    name: mudfrog-api-gateway
+
+eureka:
+  instance:
+      prefer-ip-address: true
+      lease-renewal-interval-in-seconds: 5
+      lease-expiration-duration-in-seconds: 20
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:1025/eureka/
+    registry-fetch-interval-seconds: 10
+
+management:
+  port: 54002
+  security:
+    enabled: false
+  health:
+    mail:
+      enabled: false
+      
+zuul:
+  routes:
+    api-a-url:
+      path: /api-a-url/**
+      serviceId: mudfrog-samples  # 可配置服务的url和serviceId
+      # url: http://localhost:11883/
+
+

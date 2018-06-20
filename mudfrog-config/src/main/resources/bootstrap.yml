@@ -1,0 +1,40 @@
+server:
+  port: 18888
+
+spring:
+  application:
+    name: mudfrog-config-server
+  profiles:
+    active: dev
+  cloud:
+    config:
+      server:
+        git:
+          # uri: 如果将该值通过 file://前缀来设置为一个文件地地址（在windows系统中，需要使用
+          # file:///来定位文件内容），那么它将以本地仓库的方式运行，这样我们就可以脱离git服务端
+          # 来快速进行调试与开发，该方式也仅用于开发与测试，在生产环境中务必搭建自己的git仓库
+          # uri: https://github.com/smarthane/mudfrog-config-repo.git
+          uri: file:///E:\liyihua\springcloudworkspaces01\mudfrog\mudfrog-config-repo
+          default-label: ${spring.profiles.active}   #解决监控down
+
+eureka:
+  instance:
+      prefer-ip-address: true
+      lease-renewal-interval-in-seconds: 5  #定义服务续约任务的调用间隔默认为30秒
+      lease-expiration-duration-in-seconds: 20  #定义服务失效时间默认为90秒
+  client:
+    # fetch-registry: false  # 注册中心的职责就是维护服务实例，它并不需要云检索服务
+    # register-with-eureka: false # 不向注册中心注册自己
+    serviceUrl:
+      defaultZone: http://mudfrog:mudfrog@localhost:1025/eureka/  #启用安全校验http://mudfrog:mudfrog@localhost:1025/eureka
+    registry-fetch-interval-seconds: 10 #缓存服务地址清单的更新时间默认为30秒
+
+# 关闭安全管理
+management:
+  security:
+    enabled: false
+endpoints:
+  health:
+    sensitive: false
+
+

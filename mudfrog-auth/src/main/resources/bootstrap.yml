@@ -1,0 +1,88 @@
+server:
+  port: 10260
+
+spring:
+  application:
+    name: mudfrog-auth
+  profiles:
+    active: dev
+
+  cloud:
+    config:
+      fail-fast: true
+      discovery:
+        service-id: mudfrog-config-server
+        enabled: true
+      profile: ${spring.profiles.active}
+      label: ${spring.profiles.active}
+
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.213.81:3306/test?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+    username: root
+    password: 111111
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  redis:
+    host: 192.168.213.81
+    port: 6379
+    password: 123456
+    database: 1
+    pool:
+      max-active: 8
+      max-idle: 8
+      max-wait: -1
+
+  http:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+  freemarker:
+    allow-request-override: false
+    allow-session-override: false
+    cache: true
+    charset: UTF-8
+    check-template-location: true
+    content-type: text/html
+    enabled: true
+    expose-request-attributes: false
+    expose-session-attributes: false
+    expose-spring-macro-helpers: true
+    prefer-file-system-access: true
+    suffix: .ftl
+    template-loader-path: classpath:/templates/
+
+eureka:
+  instance:
+      prefer-ip-address: true
+      lease-renewal-interval-in-seconds: 5  #定义服务续约任务的调用间隔默认为30秒
+      lease-expiration-duration-in-seconds: 20  #定义服务失效时间默认为90秒
+  client:
+    # fetch-registry: false  # 注册中心的职责就是维护服务实例，它并不需要云检索服务
+    # register-with-eureka: false # 不向注册中心注册自己
+    serviceUrl:
+      defaultZone: http://mudfrog:mudfrog@localhost:1025/eureka/  #启用安全校验http://mudfrog:mudfrog@localhost:1025/eureka
+    registry-fetch-interval-seconds: 10 #缓存服务地址清单的更新时间默认为30秒
+
+# 关闭安全管理
+management:
+  port: 10261
+  security:
+    enabled: false
+endpoints:
+  health:
+    sensitive: false
+
+security:
+  basic:
+    enabled: false
+  oauth2:
+      resource:
+        filter-order: 3
+
+

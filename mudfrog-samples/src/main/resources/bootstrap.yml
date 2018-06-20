@@ -1,0 +1,164 @@
+spring:
+  profiles:
+    active: rabbitmqsample
+
+## --- 为多环境配置分隔
+
+---
+spring:
+  profiles: samples1
+  application:
+    name: mudfrog-samples
+server:
+  port: 11881
+
+eureka:
+  instance:
+      prefer-ip-address: true
+      lease-renewal-interval-in-seconds: 5  #定义服务续约任务的调用间隔默认为30秒
+      lease-expiration-duration-in-seconds: 20  #定义服务失效时间默认为90秒
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:1025/eureka/  #启用安全校验http://mudfrog:mudfrog@localhost:1025/eureka
+    registry-fetch-interval-seconds: 10 #缓存服务地址清单的更新时间默认为30秒
+
+management:
+  port: 21881
+  security:
+    enabled: false
+  health:
+    mail:
+      enabled: false
+      
+---
+spring:
+  profiles: samples2
+  application:
+    name: mudfrog-samples
+server:
+  port: 11882
+
+eureka:
+  instance:
+      prefer-ip-address: true
+      lease-renewal-interval-in-seconds: 5
+      lease-expiration-duration-in-seconds: 20
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:1025/eureka/
+    registry-fetch-interval-seconds: 10
+
+management:
+  port: 21882
+  security:
+    enabled: false
+  health:
+    mail:
+      enabled: false
+
+---
+spring:
+  profiles: ribbonconsumer
+  application:
+    name: mudfrog-ribbon-consumer
+server:
+  port: 11883
+
+eureka:
+  instance:
+      prefer-ip-address: true
+      lease-renewal-interval-in-seconds: 5
+      lease-expiration-duration-in-seconds: 20
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:1025/eureka/
+    registry-fetch-interval-seconds: 10
+
+management:
+  port: 21883
+  endpoints:
+      web:
+        exposure:
+          include: hystrix.stream
+        base-path: /
+  security:
+    enabled: false
+  health:
+    mail:
+      enabled: false
+
+---
+spring:
+  profiles: feignsample
+  application:
+    name: feign-samples
+server:
+  port: 11885
+
+eureka:
+  instance:
+      prefer-ip-address: true
+      lease-renewal-interval-in-seconds: 5
+      lease-expiration-duration-in-seconds: 20
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:1025/eureka/
+    registry-fetch-interval-seconds: 10
+
+feign:
+  hystrix:
+    enabled: true
+
+---
+spring:
+  profiles: configsample
+  application:
+    name: config-samples
+  cloud:
+    config:
+      fail-fast: true
+      discovery:
+        enabled: false
+      profile: dev
+      label: dev
+      uri: http://localhost:18888/
+server:
+  port: 18881
+eureka:
+  client:
+    fetch-registry: false  # 注册中心的职责就是维护服务实例，它并不需要云检索服务
+    register-with-eureka: false # 不向注册中心注册自己
+management:
+  port: 17772
+  security:
+    enabled: false
+  health:
+    mail:
+      enabled: false
+---
+spring:
+  profiles: rabbitmqsample
+  application:
+    name: rabbitmq-samples
+  rabbitmq:
+    host: 192.168.213.15
+    port: 5672
+    username: test01
+    password: 123456
+
+server:
+  port: 16881
+
+
+eureka:
+  client:
+    fetch-registry: false  # 注册中心的职责就是维护服务实例，它并不需要云检索服务
+    register-with-eureka: false # 不向注册中心注册自己
+
+management:
+  port: 16772
+  security:
+    enabled: false
+  health:
+    mail:
+      enabled: false

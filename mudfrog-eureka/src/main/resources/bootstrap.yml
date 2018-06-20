@@ -1,0 +1,33 @@
+server:
+  port: 1025
+
+spring:
+  application:
+    name: mudfrog-eureka-server
+
+security:
+  basic:
+    enabled: true # 启用eureka身份认证
+  user:
+    name: mudfrog # 定义用户名
+    password: mudfrog # 定义密码
+
+eureka:
+  client:
+    fetch-registry: false  # 注册中心的职责就是维护服务实例，它并不需要云检索服务
+    register-with-eureka: false # 不向注册中心注册自己
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  instance:
+    hostname: localhost
+  server:  #配置属性，但由于 Eureka 自我保护模式以及心跳周期长的原因，经常会遇到 Eureka Server 不剔除已关停的节点的问题
+    enable-self-preservation: false
+    eviction-interval-timer-in-ms: 5000
+
+management:
+  port: 54001
+  security:
+    enabled: false
+  health:
+    mail:
+      enabled: false
