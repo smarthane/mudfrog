@@ -1,6 +1,6 @@
 package com.smarthane.mudfrog.auth.dao;
 
-import com.smarthane.mudfrog.auth.entities.Account;
+import com.smarthane.mudfrog.auth.entities.OAuthAccountEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -10,13 +10,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @Date: 2018/6/11 15:39
  * @Description:
  */
-public interface AccountDao extends JpaRepository<Account, Integer> {
+public interface OAuthAccountDao extends JpaRepository<OAuthAccountEntity, Integer> {
 
     /**
      * 根据用户名查找账户信息
      * @param username 用户名
      * @return 账户信息
      */
-    Account findByUsername(String username);
+    OAuthAccountEntity findByUsername(String username);
 
 }

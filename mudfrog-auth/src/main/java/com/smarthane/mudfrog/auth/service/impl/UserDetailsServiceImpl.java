@@ -1,7 +1,7 @@
 package com.smarthane.mudfrog.auth.service.impl;
 
-import com.smarthane.mudfrog.auth.dao.AccountDao;
-import com.smarthane.mudfrog.auth.entities.Account;
+import com.smarthane.mudfrog.auth.dao.OAuthAccountDao;
+import com.smarthane.mudfrog.auth.entities.OAuthAccountEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private AccountDao accountDao;
+    private OAuthAccountDao accountDao;
 
     /**
      * 根据用户名查找账户信息并返回用户信息实体
@@ -32,7 +32,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Account account = accountDao.findByUsername(username);
+        OAuthAccountEntity account = accountDao.findByUsername(username);
         if (account!=null) {
             return new User(account.getUsername(),account.getPassword(), AuthorityUtils.createAuthorityList(account.getRoles()));
         } else {

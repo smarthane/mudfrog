@@ -10,19 +10,21 @@ import java.io.Serializable;
  * Created with by smarthane-cloud-microservice.
  *
  * @author: smarthane
- * @Date: 2018/6/11 15:04
+ * @Date: 2018/6/22 13:45
  * @Description:
  */
 @Entity
-@Table(name = "account")
-public class Account implements Serializable {
+@Table(name = "oauth_account")
+public class OAuthAccountEntity implements Serializable {
+
+    private static final long serialVersionUID = 6489639750245179999L;
 
     @Id
     @GeneratedValue
     private Integer id;          // 主键
-    private String username;    // 用户名
-    private String password;    // 密码
-    private String[] roles;     // 角色
+    private String username;     // 用户名
+    private String password;     // 密码
+    private String[] roles;      // 角色
 
     public Integer getId() {
         return id;
