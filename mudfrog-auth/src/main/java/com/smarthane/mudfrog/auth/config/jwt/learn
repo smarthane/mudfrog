@@ -1,0 +1,24 @@
+JWT. JSON Web Token其实就是一个包含认证数据的JSON, 大概长这样子
+分三个部分,
+第一部分{"alg":"HS512"}是签名算法
+第二部分 {"exp":1495176357,"username":"admin"}是一些数据(你想放什么都可以), 这里有过期日期和用户名
+第三部分')4'7�6-DM�(�H6fJ::$c���a4�~tI2%Xd-�$nL(l非常重要,是签名Signiture, 服务器会验证这个以防伪造. 因为JWT其实是明文传送, 任何人都能篡改里面的内容. 服务端通过验证签名, 从而确定这个JWT是自己生成的.
+
+原理也不是很复杂, 我用一行代码就能表示出来
+首先我们将JWT第一第二部分的内容, 加上你的秘钥(key或者叫secret), 然后用某个算法(比如hash算法)求一下, 求得的内容就是你的签名. 验证的时候只需要验证你用JWT算出来的值是否等于JWT里面的签名.
+因为别人没有你的key, 所以也就没法伪造签名.
+
+简单粗暴一行代码解释什么是签名:
+
+ int signiture = ("{alg:HS512}{exp:1495176357,username:admin}" + key).hashCode();
+最后附上签名,得到完整的JWT:
+
+{"alg":"HS512"}.{"exp":1495176357,"username":"admin"}.')4'7�6-DM�(�H6fJ::$c���a4�~tI2%Xd-�$nL(l
+为了方便复制和使用, 通常我们都是把JWT用base64编码之后放在http的header里面, 并且每一次呼叫api都附上这个JWT, 并且服务器每次也验证JWT是否过期
+
+通常我们用到的JWT:
+
+Base64编码后:
+eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE0OTUxNzYzNTcsInVzZXJuYW1lIjoiYWRtaW4ifQ.mQtCfLKfI0J7c3HTYt7kRN4AcoixiUSDaZv2ZKOjq2JMZjBhf1DmE0Fn6PdEkyJZhYZJTMLaIPwyR-uu6BMKGw
+
+https://www.jianshu.com/p/e62af4a217eb
