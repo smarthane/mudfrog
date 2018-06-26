@@ -57,6 +57,7 @@
         <module>mudfrog-auth</module>
         <module>mudfrog-modules</module>
         <module>mudfrog-visual</module>
+        <module>mudfrog-bigdatas</module>
     </modules>
 
 
