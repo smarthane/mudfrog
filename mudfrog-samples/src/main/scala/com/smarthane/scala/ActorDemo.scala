@@ -122,9 +122,6 @@ object ActorWordCount {
 	  val files: Array[String] = Array("c://testfile/a.txt", "c://testfile/b.txt", "c://testfile/c.txt")
 		// 存放接收到的每个文件的结果数据
 		var replyList = new ListBuffer[Future[Any]]
-		// 存放Future里有值 的数据
-		val res = new ListBuffer[Map[String, Int]]
-		
 		for (file <- files) {
 			val task = new ActorWordCountTask
 			task.start()
@@ -134,16 +131,10 @@ object ActorWordCount {
 			replyList += reply
 		}
 		while (replyList.size > 0) {
-			// 过虑每个Future对象，如果None类型的，就过虑掉
-		  val dones =	replyList.filter(_.isSet)
-			for (done <- dones) {
-			  res += done.apply().asInstanceOf[Map[String, Int]]
-				replyList -= done
-			}
+			
+			//replyList.f
+			
 		}
-    
-		//得到全局聚合的数据
-		println(res.flatten.groupBy(_._1).mapValues(_.foldLeft(0)(_ + _._2)))
 		
 		
 	}
