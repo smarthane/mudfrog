@@ -13,6 +13,8 @@
     <version>1.0.0</version>
     <modules>
         <module>mudfrog-biz-samples</module>
+        <module>mudfrog-dubbo-api</module>
+        <module>mudfrog-dubbo-biz</module>
     </modules>
     <name>mudfrog-modules</name>
 

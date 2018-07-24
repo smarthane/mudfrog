@@ -1,0 +1,101 @@
+spring:
+  profiles:
+    active: mudfrog-dubbo-provider
+
+## --- 为多环境配置分隔
+---
+spring:
+  profiles: mudfrog-dubbo-provider
+  application:
+    name: mudfrog-dubbo-provider
+server:
+  port: 9090
+
+demo:
+  service:
+    version: 1.0.0
+
+dubbo:
+  application:
+    id: dubbo-provider-demo
+    name: dubbo-provider-demo
+    qos-port: 22222
+    qos-enable: true
+  protocol:
+    id: dubbo
+    name: dubbo
+    port: 12345
+    status: server
+  registry:
+    id: my-registry
+    address: N/A
+  scan:
+    base-packages: com.smarthane.dubbo.biz.service
+
+management:
+  endpoint:
+    dubbo:
+      enabled: true
+    dubbo-shutdown:
+      enabled: true
+    dubbo-configs:
+      enabled: true
+    dubbo-services:
+      enabled: true
+    dubbo-references:
+      enabled: true
+    dubbo-properties:
+      enabled: true
+  health:
+    dubbo:
+      status:
+        defaults: memory
+        extras: load,threadpool
+
+---
+spring:
+  profiles: mudfrog-dubbo-consumer
+  application:
+    name: mudfrog-dubbo-consumer
+server:
+  port: 8080
+
+demo:
+  service:
+    version: 1.0.0
+
+dubbo:
+  application:
+    id: dubbo-consumer-demo
+    name: dubbo-consumer-demo
+    qos-port: 22223
+  protocol:
+    id: dubbo
+    name: dubbo
+    port: 12345
+
+endpoints:
+  dubbo:
+   enabled: true
+
+management:
+  server:
+    port: 8081
+  endpoint:
+    dubbo:
+      enabled: true
+    dubbo-shutdown:
+      enabled: true
+    dubbo-configs:
+      enabled: true
+    dubbo-services:
+      enabled: true
+    dubbo-references:
+      enabled: true
+    dubbo-properties:
+      enabled: true
+  health:
+    dubbo:
+      status:
+        defaults: memory
+        extras: load,threadpool
