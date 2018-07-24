@@ -1,12 +1,23 @@
 server:
-  port: 2025
+  port: 20001
 
 spring:
   application:
-    name: mudfrog-api-gateway
+    name: mudfrog-upms-service
   profiles:
-      active: dev
-      
+    active: dev
+  cloud:
+    config:
+      fail-fast: true
+      discovery:
+        service-id: mudfrog-config-server
+        enabled: true
+      profile: ${spring.profiles.active}
+      label: ${spring.profiles.active}
+
+---
+spring:
+  profiles: dev
 eureka:
   instance:
       prefer-ip-address: true
@@ -18,20 +29,3 @@ eureka:
     serviceUrl:
       defaultZone: http://mudfrog:mudfrog@localhost:1025/eureka/  #启用安全校验http://mudfrog:mudfrog@localhost:1025/eureka
     registry-fetch-interval-seconds: 10 #缓存服务地址清单的更新时间默认为30秒
-
-management:
-  port: 54002
-  security:
-    enabled: false
-  health:
-    mail:
-      enabled: false
-      
-zuul:
-  routes:
-    api-a-url:
-      path: /api-a-url/**
-      serviceId: mudfrog-samples  # 可配置服务的url和serviceId
-      # url: http://localhost:11883/
-
-

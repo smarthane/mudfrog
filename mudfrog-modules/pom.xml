@@ -15,6 +15,7 @@
         <module>mudfrog-biz-samples</module>
         <module>mudfrog-dubbo-api</module>
         <module>mudfrog-dubbo-biz</module>
+        <module>mudfrog-upms-service</module>
     </modules>
     <name>mudfrog-modules</name>
 

@@ -7,6 +7,9 @@
     <artifactId>mudfrog</artifactId>
     <version>${mudfrog.version}</version>
     <packaging>pom</packaging>
+    <inceptionYear>2018</inceptionYear>
+    <name>mudfrog microservice</name>
+    <description>A microservice framework base on springcloud components</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -14,6 +17,16 @@
         <version>1.5.12.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
+    <developers>
+        <developer>
+            <name>smarthane</name>
+            <email>459121776@qq.com</email>
+            <roles>
+                <role>Architect</role>
+            </roles>
+        </developer>
+    </developers>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -59,7 +72,6 @@
         <module>mudfrog-visual</module>
         <module>mudfrog-bigdatas</module>
     </modules>
-
 
     <!--公共依赖-->
     <dependencies>
